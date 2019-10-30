@@ -30,12 +30,10 @@
     </div>
 
     <div class="form-group">
-      <%= label f, :user_type %>
-      <%= radio_button f, :user_type, false %>
-      <%= label f, :user_type, "Worker" %>
-      <%= radio_button f, :user_type, true %>
-      <%= label f, :user_type, "Manager" %>
-      <%= error_tag f, :user_type %>
+      <%= radio_button f, :is_manager, false, checked: "checked" %>
+      <%= label f, :worker_type, "Worker" %>
+      <%= radio_button f, :is_manager, true %>
+      <%= label f, :manager_type, "Manager" %>
     </div>
 
   <div>

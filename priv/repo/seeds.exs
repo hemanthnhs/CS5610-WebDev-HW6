@@ -14,4 +14,4 @@ alias Timesheets.Repo
 alias Timesheets.Users.User
 
 Repo.insert!(%User{name: "worker1", email: "worker1@example.com"})
-Repo.insert!(%User{name: "manager1", email: "manager1@example.com"})
+Repo.insert!(%User{name: "manager1", email: "manager1@example.com", is_manager: true})

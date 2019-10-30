@@ -4,30 +4,42 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Timesheets · Phoenix Framework</title>
+    <title>Timesheets · Home work 6</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
     <div class="container">
           <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-            <div class="col-4">
-              <a class="navbar-brand" href="#">Timesheets</a>
-            </div>
             <div class="col-3">
+              <a class="navbar-brand" href="/">Timesheets</a>
+            </div>
+            <div class="col-5">
             <%= if @current_user do %>
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">All Logs</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Your Logs</a>
-                </li>
-              </ul>
-             <% end %>
+                  <ul class="navbar-nav mr-auto">
+                    <%= if @current_user.is_manager do %>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/logs/requests">View Logs</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/jobs">View Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/jobs/new">Create Job</a>
+                    </li>
+                  <% else %>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/logs/new">Log work</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/logs">Submitted Logs</a>
+                  </li>
+                  <% end %>
+                </ul>
+              <% end %>
             </div>
             <div class="col-4 text-light">
                   <%= if @current_user do %>
-                    User: <%= @current_user.name %>
+                    Logged as : <%= @current_user.name %>
                     (<%= link("Logout", class: "text-light", to: Routes.session_path(@conn, :delete),
                       method: :delete) %>)
                   <% else %>

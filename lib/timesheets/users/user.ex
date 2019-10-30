@@ -6,17 +6,17 @@ defmodule Timesheets.Users.User do
     field :email, :string, null: false
     field :name, :string, null: false
     field :password_hash, :string
+    field :is_manager, :boolean
 
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
-    field :is_manager, :boolean, virtual: true
     timestamps()
   end
 
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :password, :password_confirmation])
+    |> cast(attrs, [:email, :name, :password, :password_confirmation, :is_manager])
     |> validate_confirmation(:password)
     |> validate_length(:password, min: 8) # too short
     |> hash_password()
