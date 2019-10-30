@@ -7,7 +7,7 @@ defmodule Timesheets.Logs do
   alias Timesheets.Repo
 
   alias Timesheets.Logs.Log
-
+  alias Timesheets.Jobs.Job
   @doc """
   Returns the list of logs.
 
@@ -21,6 +21,15 @@ defmodule Timesheets.Logs do
     Repo.all(Log)
   end
 
+  def list_logs_by_created(manager_id) do
+    jobs = Repo.all(from(j in Job, select: j.id, where: j.user_id == ^manager_id))
+    Repo.all(from(l in Log, where: l.job_id in ^jobs))
+  end
+
+  def list_logs_by_logged(worker_id) do
+#    Attribution and Reference from https://elixirforum.com/t/what-is-the-correct-way-to-use-ecto-query-that-allow-items-to-be-displayed-in-templates/7313
+    Repo.all(from(l in Log, where: l.user_id == ^worker_id))
+  end
   @doc """
   Gets a single log.
 

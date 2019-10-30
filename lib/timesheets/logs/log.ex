@@ -5,9 +5,11 @@ defmodule Timesheets.Logs.Log do
   schema "logs" do
     field :desc, :string
     field :hours, :float
-    field :job_id, :id
-    field :user_id, :id
+#    field :job_id, :id
+#    field :user_id, :id
 
+    belongs_to :job, Timesheets.Jobs.Job
+    belongs_to :user, Timesheets.Users.User
     timestamps()
   end
 

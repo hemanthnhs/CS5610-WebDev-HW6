@@ -6,7 +6,7 @@ defmodule TimesheetsWeb.LogController do
   alias Timesheets.Logs.Log
 
   def index(conn, _params) do
-    logs = Logs.list_logs()
+    logs = Logs.list_logs_by_logged(conn.assigns[:current_user].id)
     render(conn, "index.html", logs: logs)
   end
 
@@ -22,12 +22,17 @@ defmodule TimesheetsWeb.LogController do
     case Logs.create_log(log_params) do
       {:ok, log} ->
         conn
-        |> put_flash(:info, "Log created successfully.")
+        |> put_flash(:info, "Work Log request created successfully. Sent for Manager Approval.")
         |> redirect(to: Routes.log_path(conn, :show, log))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def requests(conn, _params) do
+    logs = Logs.list_logs_by_created(conn.assigns[:current_user].id)
+    render(conn, "index.html", logs: logs)
   end
 
   def show(conn, %{"id" => id}) do

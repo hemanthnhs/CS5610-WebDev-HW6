@@ -21,6 +21,7 @@ defmodule TimesheetsWeb.Router do
     resources "/users", UserController
     resources "/jobs", JobController
     resources "/logs", LogController
+    get "/requests", LogController, :requests
     resources "/sessions", SessionController,
               only: [:new, :create, :delete], singleton: true
   end
