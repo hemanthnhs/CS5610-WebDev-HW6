@@ -17,6 +17,27 @@
     <%= error_tag f, :name %>
   </div>
 
+    <div class="form-group">
+      <%= label f, :password %>
+      <%= password_input f, :password, class: "form-control" %>
+      <%= error_tag f, :password %>
+    </div>
+
+    <div class="form-group">
+      <%= label f, :password_confirmation %>
+      <%= password_input f, :password_confirmation, class: "form-control" %>
+      <%= error_tag f, :password_confirmation %>
+    </div>
+
+    <div class="form-group">
+      <%= label f, :user_type %>
+      <%= radio_button f, :user_type, false %>
+      <%= label f, :user_type, "Worker" %>
+      <%= radio_button f, :user_type, true %>
+      <%= label f, :user_type, "Manager" %>
+      <%= error_tag f, :user_type %>
+    </div>
+
   <div>
     <%= submit "Save", class: "btn btn-primary" %>
   </div>
