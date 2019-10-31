@@ -5,7 +5,6 @@ defmodule Timesheets.Jobs.Job do
   schema "jobs" do
     field :desc, :string
     field :jobname, :string
-#    field :user_id, :id
 
     belongs_to :user, Timesheets.Users.User
     timestamps()

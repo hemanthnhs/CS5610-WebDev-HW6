@@ -1,4 +1,4 @@
-<h1>Edit Job</h1>
+<h1>Edit/Update Job</h1>
 
 <%= render "form.html", Map.put(assigns, :action, Routes.job_path(@conn, :update, @job)) %>
 

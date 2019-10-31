@@ -5,7 +5,7 @@
     </div>
   <% end %>
     <div class="form-group">
-      <%= label f, :job_id %>
+      <%= label f, :job_id, "Job Code" %>
       <%= select f, :job_id, @jobs, class: "form-control" %>
       <%= error_tag f, :hours %>
     </div>

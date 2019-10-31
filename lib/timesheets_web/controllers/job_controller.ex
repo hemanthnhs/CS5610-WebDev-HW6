@@ -5,7 +5,7 @@ defmodule TimesheetsWeb.JobController do
   alias Timesheets.Jobs.Job
 
   def index(conn, _params) do
-    jobs = Jobs.list_jobs()
+    jobs = Jobs.list_jobs(conn.assigns[:current_user].id)
     render(conn, "index.html", jobs: jobs)
   end
 
