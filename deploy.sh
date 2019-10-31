@@ -1,26 +1,22 @@
 #!/bin/bash
 
-export MIX_ENV=prod
-export PORT=4794
 export NODEBIN=`pwd`/assets/node_modules/.bin
 export PATH="$PATH:$NODEBIN"
 
-echo "Building..."
+source ./prod-env.sh
 
-mkdir -p ~/.config
-mkdir -p priv/static
-
+# Build Elixir Code
 mix deps.get
 mix compile
+
+# Build Assets
+mkdir -p priv/static
 (cd assets && npm install)
 (cd assets && webpack --mode production)
 mix phx.digest
 
-echo "Generating release..."
+# Migrate DB
+mix ecto.migrate
+
+# Generate the release
 mix release
-
-echo "Stopping old copy of app, if any..."
-_build/prod/rel/timesheets/bin/timesheets stop || true
-
-echo "Starting app..."
-_build/prod/rel/timesheets/bin/timesheets start

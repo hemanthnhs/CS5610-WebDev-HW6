@@ -1,3 +1,7 @@
+upstream timesheets_app {
+    server localhost:5001;
+}
+
 server {
     listen 80;
     listen [::]:80;
@@ -5,13 +9,13 @@ server {
     server_name time1.cs5610f19.website;
 
     location / {
-        proxy_pass http://localhost:4794;
+        proxy_pass http://timesheets_app;
     }
 
     location /socket {
-        proxy_pass http://localhost:4794;
+        proxy_pass http://timesheets_app;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";	 	 
+        proxy_set_header Connection "upgrade";
     }
 }
