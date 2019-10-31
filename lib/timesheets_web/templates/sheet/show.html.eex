@@ -17,13 +17,13 @@ Logged For Date : <%= @sheet.date %>
   <tbody>
     <%= for log <- @logs do %>
             <tr>
-                <td class="col-4">
+                <td>
                    <%= log.job.jobname %>
                 </td>
-                <td class="col-3">
+                <td>
                     <%= log.hours %>
                 </td>
-                <td class="col-5">
+                <td>
                     <%= log.desc %>
                 </td>
             </tr>

@@ -1,4 +1,4 @@
-<h1>Manage Job</h1>
+<h1>Viewing Job</h1>
 
 <ul>
   <li>
@@ -13,5 +13,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.job_path(@conn, :edit, @job) %></span>
-<span><%= link "Back", to: Routes.job_path(@conn, :index) %></span>
+<span><%= link "Edit", class: "btn btn-secondary", to: Routes.job_path(@conn, :edit, @job) %></span>
+<span><%= link "Back", class: "btn btn-outline-dark", to: Routes.job_path(@conn, :index) %></span>

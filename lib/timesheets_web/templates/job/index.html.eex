@@ -3,7 +3,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Job Name</th>
+      <th>Job Code</th>
       <th>Description</th>
 
       <th></th>
@@ -16,8 +16,8 @@
       <td><%= job.desc %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.job_path(@conn, :show, job) %></span>
-        <span><%= link "Edit", to: Routes.job_path(@conn, :edit, job) %></span>
+        <span><%= link "Show", class: "btn btn-outline-info", to: Routes.job_path(@conn, :show, job) %></span>
+        <span><%= link "Edit", class: "btn btn-outline-primary", to: Routes.job_path(@conn, :edit, job) %></span>
       </td>
     </tr>
 <% end %>

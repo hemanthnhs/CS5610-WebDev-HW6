@@ -27,7 +27,7 @@ defmodule Timesheets.Sheets do
   end
 
   def get_sheet!(id) do
-    Repo.get!(Sheet, id) |> Repo.preload([:user])
+    Repo.get!(Sheet, id) |> Repo.preload([:user, :logs])
   end
 
   def approve_sheet(%Sheet{} = sheet) do
@@ -62,5 +62,9 @@ defmodule Timesheets.Sheets do
 
   def change_sheet(%Sheet{} = sheet) do
     Sheet.changeset(sheet, %{})
+  end
+
+  def format_sheet(sheet) do
+    Sheet.formatset(sheet)
   end
 end

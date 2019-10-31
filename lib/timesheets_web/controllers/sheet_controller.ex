@@ -50,13 +50,14 @@ defmodule TimesheetsWeb.SheetController do
 
   def edit(conn, %{"id" => id}) do
     sheet = Sheets.get_sheet!(id)
-    changeset = Sheets.change_sheet(sheet)
-    render(conn, "edit.html", sheet: sheet, changeset: changeset)
+    jobs = Jobs.list_jobs() |> Enum.map(&{&1.jobname, &1.id})
+    changeset = Sheets.format_sheet(sheet)
+    IO.inspect(changeset)
+    render(conn, "edit.html", sheet: sheet, jobs: jobs, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "sheet" => sheet_params}) do
     sheet = Sheets.get_sheet!(id)
-
     case Sheets.update_sheet(sheet, sheet_params) do
       {:ok, sheet} ->
         conn
