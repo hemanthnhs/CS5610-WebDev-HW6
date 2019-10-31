@@ -11,10 +11,8 @@ defmodule TimesheetsWeb.LogController do
   end
 
   def new(conn, _params) do
-#    Attribution : https://stackoverflow.com/questions/36698192/how-to-create-a-select-tag-with-options-and-values-from-a-separate-model-in-the
-    jobs = Jobs.list_jobs() |> Enum.map(&{&1.jobname, &1.id})
     changeset = Logs.change_log(%Log{})
-    render(conn, "new.html", changeset: changeset, jobs: jobs)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"log" => log_params}) do

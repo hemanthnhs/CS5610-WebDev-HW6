@@ -6,13 +6,12 @@ defmodule Timesheets.Repo.Migrations.CreateLogs do
       add :hours, :float, null: false
       add :desc, :text
       add :job_id, references(:jobs, on_delete: :nothing), null: false
-      add :user_id, references(:users, on_delete: :nothing), null: false
-      add :approved, :boolean, default: false, null: false
+      add :sheet_id, references(:sheets, on_delete: :nothing), null: false
 
       timestamps()
     end
 
     create index(:logs, [:job_id])
-    create index(:logs, [:user_id])
+    create index(:logs, [:sheet_id])
   end
 end

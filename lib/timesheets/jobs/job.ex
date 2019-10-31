@@ -7,6 +7,7 @@ defmodule Timesheets.Jobs.Job do
     field :jobname, :string
 
     belongs_to :user, Timesheets.Users.User
+    has_many :logs, Timesheets.Logs.Log
     timestamps()
   end
 

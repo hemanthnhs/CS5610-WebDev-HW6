@@ -1,0 +1,49 @@
+<%= if @conn.assigns[:current_user].is_manager do %>
+    <h1>Sheets Dashboard</h1>
+<% else %>
+    <h2>Submitted Time Sheets</h2>
+<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <%= if @conn.assigns[:current_user].is_manager do %>
+         <th>Requested by</th>
+      <% else %>
+         <th>Managed by</th>
+      <% end %>
+      <th>Work Date</th>
+      <%= if @conn.assigns[:current_user].is_manager do %>
+         <th>Actions</th>
+      <% else %>
+         <th>Status</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+<%= for sheet <- @sheets do %>
+    <tr>
+      <%= if @conn.assigns[:current_user].is_manager do %>
+        <td><%= sheet.user.name %></td>
+      <% else %>
+         <td><%= sheet.job.user.name %></td>
+      <% end %>
+      <td><%= sheet.date %></td>
+      <td>
+        <%= if @conn.assigns[:current_user].is_manager do %>
+            <%= if (sheet.approved) do %>
+                Approved
+            <% else %>
+              <span><%= link "View and Edit", class: "btn btn-primary", to: Routes.sheet_path(@conn, :show, sheet) %></span>
+              <span><%= link "Approve", class: "btn btn-success", to: Routes.sheet_path(@conn, :approve, %{:id => sheet.id}) %></span>
+              <span><%= link "Disapprove", class: "btn btn-danger", to: Routes.sheet_path(@conn, :delete, sheet), method: :delete, data: [confirm: "The request will be deleted. Are you sure?"] %></span>
+            <% end %>
+        <% else %>
+           <%= if (sheet.approved) do "Approved" else "Pending Approval" end %>
+        <% end %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Log", to: Routes.sheet_path(@conn, :new) %></span>

@@ -20,8 +20,9 @@ defmodule TimesheetsWeb.Router do
     get "/", PageController, :index
     resources "/users", UserController
     resources "/jobs", JobController
-    resources "/logs", LogController
-    get "/requests", LogController, :requests
+    resources "/sheets", SheetController
+    get "/dashboard", SheetController, :dashboard
+    get "/approve", SheetController, :approve
     resources "/sessions", SessionController,
               only: [:new, :create, :delete], singleton: true
   end

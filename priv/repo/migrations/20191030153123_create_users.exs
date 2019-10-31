@@ -8,6 +8,8 @@ defmodule Timesheets.Repo.Migrations.CreateUsers do
       add :name, :string, null: false
       add :password_hash, :string, default: "", null: false
       add :is_manager, :boolean, default: false, null: false
+      add :supervisor_id, references(:users, on_delete: :nothing)
+
       timestamps()
     end
 

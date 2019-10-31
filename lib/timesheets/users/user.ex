@@ -7,12 +7,14 @@ defmodule Timesheets.Users.User do
     field :name, :string, null: false
     field :password_hash, :string
     field :is_manager, :boolean
-
+    field :supervisor_id, :id , foreign_key: :user_id
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
 
     has_many :jobs, Timesheets.Jobs.Job
     has_many :logs, Timesheets.Logs.Log
+#    belongs_to :user, Timesheets.Users.User
+#    has_one :supervisor_id, Timesheets.Users.User
     timestamps()
   end
 

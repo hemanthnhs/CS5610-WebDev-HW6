@@ -5,18 +5,16 @@ defmodule Timesheets.Logs.Log do
   schema "logs" do
     field :desc, :string
     field :hours, :float
-#    field :job_id, :id
-#    field :user_id, :id
 
     belongs_to :job, Timesheets.Jobs.Job
-    belongs_to :user, Timesheets.Users.User
+    belongs_to :sheet, Timesheets.Sheets.Sheet
     timestamps()
   end
 
   @doc false
   def changeset(log, attrs) do
     log
-    |> cast(attrs, [:hours, :desc, :job_id, :user_id])
-    |> validate_required([:hours, :desc, :job_id, :user_id])
+    |> cast(attrs, [:hours, :desc, :job_id, :sheet_id])
+    |> validate_required([:hours, :desc, :job_id, :sheet_id])
   end
 end

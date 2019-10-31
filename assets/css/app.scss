@@ -2,3 +2,11 @@
 
 $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 @import "~bootstrap/scss/bootstrap";
+
+#sheet-header{
+  margin-left: 0px;
+}
+
+textarea.log-notes{
+  height: 40px;
+}

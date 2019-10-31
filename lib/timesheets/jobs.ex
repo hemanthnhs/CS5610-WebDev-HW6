@@ -17,7 +17,7 @@ defmodule Timesheets.Jobs do
       [%Job{}, ...]
 
   """
-  def list_jobs() do
+  def list_jobs do
     Repo.all(Job)
   end
 

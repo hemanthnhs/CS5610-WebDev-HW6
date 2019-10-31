@@ -1,0 +1,36 @@
+<h2>Work Log Information</h2>
+<h5>Approval Status: <%= if (@sheet.approved) do "Approved" else "Pending Approval" end %></h5>
+<h5>
+Logged For Date : <%= @sheet.date %>
+</h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Job Code</th>
+      <th>Hours</th>
+      <th>Work Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for log <- @logs do %>
+            <tr>
+                <td class="col-4">
+                   <%= log.job.jobname %>
+                </td>
+                <td class="col-3">
+                    <%= log.hours %>
+                </td>
+                <td class="col-5">
+                    <%= log.desc %>
+                </td>
+            </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= link "Edit", class: "btn btn-secondary", to: Routes.sheet_path(@conn, :edit, @sheet) %></span>
+<%= if @conn.assigns[:current_user].is_manager do %>
+    <span><%= link "Approve", class: "btn btn-success", to: Routes.sheet_path(@conn, :show, @sheet) %></span>
+    <span><%= link "Disapprove", class: "btn btn-danger", to: Routes.sheet_path(@conn, :delete, @sheet), method: :delete, data: [confirm: "The request will be deleted. Are you sure?"] %></span>
+<% end %>
+<span><%= link "Back", class: "btn btn-light", to: Routes.sheet_path(@conn, :index) %></span>
