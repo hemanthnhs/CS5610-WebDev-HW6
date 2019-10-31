@@ -7,8 +7,13 @@ defmodule TimesheetsWeb.SheetController do
   alias Timesheets.Logs
 
   def index(conn, _params) do
-    sheets = Sheets.list_sheets_of_logged(conn.assigns[:current_user].id)
-    render(conn, "index.html", sheets: sheets)
+    if conn.assigns[:current_user].is_manager do
+      sheets = Sheets.list_subordinate_sheets(conn.assigns[:current_user].id)
+      render(conn, "index.html", sheets: sheets)
+    else
+      sheets = Sheets.list_sheets_of_logged(conn.assigns[:current_user].id)
+      render(conn, "index.html", sheets: sheets)
+    end
   end
 
   def new(conn, _params) do
@@ -31,13 +36,7 @@ defmodule TimesheetsWeb.SheetController do
     end
   end
 
-  def dashboard(conn, _params) do
-    sheets = Sheets.list_subordinate_sheets(conn.assigns[:current_user].id)
-    render(conn, "index.html", sheets: sheets)
-  end
-
   def approve(conn, %{"id" => id}) do
-    IO.puts("===========================================")
     sheet = Sheets.get_sheet!(id)
     Sheets.approve_sheet(sheet)
     redirect(conn, to: Routes.sheet_path(conn, :dashboard))

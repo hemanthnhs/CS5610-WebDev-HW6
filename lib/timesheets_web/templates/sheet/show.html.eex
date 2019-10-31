@@ -1,5 +1,8 @@
 <h2>Work Log Information</h2>
-<h5>Approval Status: <%= if (@sheet.approved) do "Approved" else "Pending Approval" end %></h5>
+<h4>Approval Status: <%= if (@sheet.approved) do "Approved" else "Pending Approval" end %></h4>
+<%= if @conn.assigns[:current_user].is_manager do %>
+<h5>Logged by : <%= @sheet.user.name %></h5>
+<% end %>
 <h5>
 Logged For Date : <%= @sheet.date %>
 </h5>
@@ -28,9 +31,12 @@ Logged For Date : <%= @sheet.date %>
   </tbody>
 </table>
 
-<span><%= link "Edit", class: "btn btn-secondary", to: Routes.sheet_path(@conn, :edit, @sheet) %></span>
+
 <%= if @conn.assigns[:current_user].is_manager do %>
+    <span><%= link "Edit", class: "btn btn-secondary", to: Routes.sheet_path(@conn, :edit, @sheet) %></span>
     <span><%= link "Approve", class: "btn btn-success", to: Routes.sheet_path(@conn, :show, @sheet) %></span>
     <span><%= link "Disapprove", class: "btn btn-danger", to: Routes.sheet_path(@conn, :delete, @sheet), method: :delete, data: [confirm: "The request will be deleted. Are you sure?"] %></span>
+<% else %>
+    <span><%= link "Edit", class: "btn btn-secondary", to: Routes.sheet_path(@conn, :edit, @sheet) %></span>
 <% end %>
-<span><%= link "Back", class: "btn btn-light", to: Routes.sheet_path(@conn, :index) %></span>
+<span><%= link "Back", class: "btn btn-outline-dark", to: Routes.sheet_path(@conn, :index) %></span>

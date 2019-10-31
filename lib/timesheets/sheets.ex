@@ -23,10 +23,12 @@ defmodule Timesheets.Sheets do
   def list_sheets_of_logged(worker_id) do
     #    Attribution and Reference from https://elixirforum.com/t/what-is-the-correct-way-to-use-ecto-query-that-allow-items-to-be-displayed-in-templates/7313
     #    Attribution and Reference from https://elixirforum.com/t/nested-preload-from-the-doc-makes-me-confused/11991/5
-    Repo.all(from(s in Sheet, where: s.user_id == ^worker_id, preload: [:job, job: :user]))
+    Repo.all(from(s in Sheet, where: s.user_id == ^worker_id))
   end
 
-  def get_sheet!(id), do: Repo.get!(Sheet, id)
+  def get_sheet!(id) do
+    Repo.get!(Sheet, id) |> Repo.preload([:user])
+  end
 
   def approve_sheet(%Sheet{} = sheet) do
     sheet
