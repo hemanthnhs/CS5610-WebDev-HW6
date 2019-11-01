@@ -32,14 +32,16 @@ defmodule TimesheetsWeb.SheetController do
         |> redirect(to: Routes.sheet_path(conn, :show, sheet))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        jobs = Jobs.list_jobs() |> Enum.map(&{&1.jobname, &1.id})
+        render(conn, "new.html", changeset: changeset, jobs: jobs)
     end
   end
 
   def approve(conn, %{"id" => id}) do
     sheet = Sheets.get_sheet!(id)
     Sheets.approve_sheet(sheet)
-    redirect(conn, to: Routes.sheet_path(conn, :dashboard))
+    conn = put_flash(conn, :info, "Approve Successful")
+    redirect(conn, to: Routes.sheet_path(conn, :index))
   end
 
   def show(conn, %{"id" => id}) do

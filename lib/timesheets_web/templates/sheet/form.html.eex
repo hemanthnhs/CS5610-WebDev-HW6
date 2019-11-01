@@ -2,12 +2,17 @@
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
+      <%= error_tag f, :total_hours %>
     </div>
   <% end %>
-
     <div class="form-group row" id="sheet-header">
-        <%= label f, :date, "Date" %>
-        <%= date_input f, :date, class: "form-control offset-1 col-5"%>
+        <div class="col-5">
+            <span class="row">
+                <%= label f, :date, "Date", class: "col-1" %>
+                <%= date_input f, :date, class: "form-control col-9 offset-1", required: true%>
+            </span>
+            <%= error_tag f, :date %>
+        </div>
         <%= submit "Submit Sheet", class: "btn btn-success offset-4 pull-right" %>
     </div>
     <table class="table table-striped">
@@ -25,7 +30,7 @@
                <%= select f, String.to_atom("job_id_#{work_id}"), @jobs, prompt: "Select job code", class: "form-control col-10" %>
             </td>
             <td>
-                <%= number_input f, String.to_atom("hours_#{work_id}"), min: 0.0, max: 8.0, step: 0.5, class: "form-control col-8" %>
+                <%= number_input f, String.to_atom("hours_#{work_id}"), min: 1, max: 8, class: "form-control col-8" %>
             </td>
             <td>
             <%= textarea f, String.to_atom("desc_#{work_id}"), class: "form-control log-notes" %>

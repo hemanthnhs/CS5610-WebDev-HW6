@@ -40,14 +40,17 @@ defmodule Timesheets.Sheets do
     sheet = %Sheet{}
     |> Sheet.changeset(attrs)
     |> Repo.insert()
-    {:ok, sheet_info} = sheet
-    IO.inspect(sheet_info.id)
-    for work_id <- (1..8) do
-      if (attrs["job_id_#{work_id}"] != "") do
-        Logs.create_log(%{sheet_id: sheet_info.id, job_id: attrs["job_id_#{work_id}"], desc: attrs["desc_#{work_id}"], hours: attrs["hours_#{work_id}"]})
+    case sheet do
+    {:ok, sheet_info} ->
+      for work_id <- (1..8) do
+        if (attrs["job_id_#{work_id}"] != "" and attrs["hours_#{work_id}"] != "") do
+          Logs.create_log(%{sheet_id: sheet_info.id, job_id: attrs["job_id_#{work_id}"], desc: attrs["desc_#{work_id}"], hours: attrs["hours_#{work_id}"]})
+        end
       end
+      sheet
+    {:error, _} ->
+      sheet
     end
-    sheet
   end
 
   def update_sheet(%Sheet{} = sheet, attrs) do

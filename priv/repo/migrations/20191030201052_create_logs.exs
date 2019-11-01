@@ -3,7 +3,7 @@ defmodule Timesheets.Repo.Migrations.CreateLogs do
 
   def change do
     create table(:logs) do
-      add :hours, :float, null: false
+      add :hours, :integer, null: false
       add :desc, :text
       add :job_id, references(:jobs, on_delete: :nothing), null: false
       add :sheet_id, references(:sheets, on_delete: :nothing), null: false
