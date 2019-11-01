@@ -11,10 +11,6 @@ defmodule Timesheets.Sheets do
   alias Timesheets.Logs
   alias Timesheets.Users.User
 
-  def list_sheets do
-    Repo.all(Sheet)
-  end
-
   def list_subordinate_sheets(manager_id) do
     subordinates = Repo.all(from(u in User, select: u.id, where: u.supervisor_id == ^manager_id))
     Repo.all(from(s in Sheet, where: s.user_id in ^subordinates,preload: [:user]))
@@ -53,21 +49,11 @@ defmodule Timesheets.Sheets do
     end
   end
 
-  def update_sheet(%Sheet{} = sheet, attrs) do
-    sheet
-    |> Sheet.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def delete_sheet(%Sheet{} = sheet) do
-    Repo.delete(sheet)
-  end
-
   def change_sheet(%Sheet{} = sheet) do
     Sheet.changeset(sheet, %{})
   end
 
-  def format_sheet(sheet) do
-    Sheet.formatset(sheet)
+  def delete_sheet(%Sheet{} = sheet) do
+    Repo.delete(sheet)
   end
 end

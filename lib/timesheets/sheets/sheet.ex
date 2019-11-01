@@ -13,9 +13,6 @@ defmodule Timesheets.Sheets.Sheet do
 
   @doc false
   def changeset(sheet, attrs) do
-    IO.inspect(sheet.logs)
-    IO.puts ("==============================================================")
-    IO.inspect (attrs)
     sheet
     |> cast(attrs, [:date, :approved, :user_id])
     |> validate_required([:date, :approved, :user_id])
@@ -24,13 +21,15 @@ defmodule Timesheets.Sheets.Sheet do
   end
 
   def validate_hours(changeset, attrs) do
-    if(map_size(attrs) == 0) do
+    IO.inspect(changeset)
+    IO.inspect(attrs)
+    if(!get_change(changeset, :date)) do
       changeset
     else
       # https://stackoverflow.com/questions/33492121/how-to-do-reduce-with-index-in-elixir
       {_, total_hours} = 1..8
       |> Enum.reduce({1,0}, fn(num,{index,current_result}) ->
-        if (attrs["job_id_#{index}"] != "") do
+        if (attrs["job_id_#{index}"] != "" and attrs["hours_#{index}"] != "") do
           {hours, _} = Integer.parse(attrs["hours_#{index}"])
           {index+1,current_result + hours}
         else
@@ -58,20 +57,4 @@ defmodule Timesheets.Sheets.Sheet do
 
   defp get_error(comparison) when comparison == :gt, do: [ date: "Please select a date in the past" ]
   defp get_error(_), do: []
-
-  @doc false
-  def formatset(sheet) do
-#    https://stackoverflow.com/questions/33492121/how-to-do-reduce-with-index-in-elixir
-    sheet = sheet.logs
-      |> Enum.with_index
-      |> Enum.reduce(sheet, fn({l,index}, acc) ->
-      acc = Map.put(acc, String.to_atom("job_id_#{index+1}"), l.job_id)
-      acc = Map.put(acc, String.to_atom("hours_#{index+1}"), l.hours)
-      Map.put(acc, String.to_atom("desc_#{index+1}"), l.desc)
-    end)
-    sheet = sheet
-    |> cast(%{}, [:date, :approved, :user_id])
-    |> validate_required([:date, :approved, :user_id])
-    sheet
-  end
 end

@@ -11,6 +11,7 @@ defmodule Timesheets.Repo.Migrations.CreateJobs do
       timestamps()
     end
 
+    create unique_index(:jobs, [:jobname])
     create index(:jobs, [:user_id])
   end
 end

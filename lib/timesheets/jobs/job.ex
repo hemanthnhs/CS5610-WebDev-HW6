@@ -15,6 +15,7 @@ defmodule Timesheets.Jobs.Job do
   def changeset(job, attrs) do
     job
     |> cast(attrs, [:jobname, :desc, :user_id])
-    |> validate_required([:jobname, :desc, :user_id])
+    |> validate_required([:jobname, :user_id])
+    |> unique_constraint(:jobname, message: "Job Code is already taken")
   end
 end

@@ -18,8 +18,8 @@ defmodule TimesheetsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/jobs", JobController
-    resources "/sheets", SheetController
+    resources "/jobs", JobController,only: [:show, :new, :create, :edit, :update, :index]
+    resources "/sheets", SheetController,only: [:show, :new, :create, :delete]
     get "/dashboard", SheetController, :index
     get "/approve", SheetController, :approve
     resources "/sessions", SessionController,

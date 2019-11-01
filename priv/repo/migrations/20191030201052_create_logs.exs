@@ -6,7 +6,7 @@ defmodule Timesheets.Repo.Migrations.CreateLogs do
       add :hours, :integer, null: false
       add :desc, :text
       add :job_id, references(:jobs, on_delete: :nothing), null: false
-      add :sheet_id, references(:sheets, on_delete: :nothing), null: false
+      add :sheet_id, references(:sheets, on_delete: :delete_all), null: false
 
       timestamps()
     end

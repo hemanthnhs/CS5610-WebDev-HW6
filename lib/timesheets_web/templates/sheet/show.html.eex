@@ -33,10 +33,7 @@ Logged For Date : <%= @sheet.date %>
 
 
 <%= if @conn.assigns[:current_user].is_manager do %>
-    <span><%= link "Edit", class: "btn btn-secondary", to: Routes.sheet_path(@conn, :edit, @sheet) %></span>
     <span><%= link "Approve", class: "btn btn-success", to: Routes.sheet_path(@conn, :approve, %{:id => @sheet.id}) %></span>
     <span><%= link "Disapprove", class: "btn btn-danger", to: Routes.sheet_path(@conn, :delete, @sheet), method: :delete, data: [confirm: "The request will be deleted. Are you sure?"] %></span>
-<% else %>
-    <span><%= link "Edit", class: "btn btn-secondary", to: Routes.sheet_path(@conn, :edit, @sheet) %></span>
 <% end %>
 <span><%= link "Back", class: "btn btn-outline-dark", to: Routes.sheet_path(@conn, :index) %></span>

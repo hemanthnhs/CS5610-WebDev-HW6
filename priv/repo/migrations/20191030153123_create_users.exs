@@ -4,7 +4,7 @@ defmodule Timesheets.Repo.Migrations.CreateUsers do
   def change do
     create table(:users, primary_key: false) do
       add :id, :serial, primary_key: true
-      add :email, :string, null: false
+      add :email, :string, null: false, unique: true
       add :name, :string, null: false
       add :password_hash, :string, default: "", null: false
       add :is_manager, :boolean, default: false, null: false
@@ -12,6 +12,6 @@ defmodule Timesheets.Repo.Migrations.CreateUsers do
 
       timestamps()
     end
-
+    create unique_index(:users, [:email])
   end
 end

@@ -13,8 +13,6 @@ defmodule Timesheets.Users.User do
 
     has_many :jobs, Timesheets.Jobs.Job
     has_many :logs, Timesheets.Logs.Log
-#    belongs_to :user, Timesheets.Users.User
-#    has_one :supervisor_id, Timesheets.Users.User
     timestamps()
   end
 

@@ -50,33 +50,12 @@ defmodule TimesheetsWeb.SheetController do
     render(conn, "show.html", sheet: sheet, logs: logs)
   end
 
-  def edit(conn, %{"id" => id}) do
-    sheet = Sheets.get_sheet!(id)
-    jobs = Jobs.list_jobs() |> Enum.map(&{&1.jobname, &1.id})
-    changeset = Sheets.format_sheet(sheet)
-    IO.inspect(changeset)
-    render(conn, "edit.html", sheet: sheet, jobs: jobs, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "sheet" => sheet_params}) do
-    sheet = Sheets.get_sheet!(id)
-    case Sheets.update_sheet(sheet, sheet_params) do
-      {:ok, sheet} ->
-        conn
-        |> put_flash(:info, "Sheet updated successfully.")
-        |> redirect(to: Routes.sheet_path(conn, :show, sheet))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", sheet: sheet, changeset: changeset)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     sheet = Sheets.get_sheet!(id)
     {:ok, _sheet} = Sheets.delete_sheet(sheet)
 
     conn
-    |> put_flash(:info, "Sheet deleted successfully.")
+    |> put_flash(:info, "Time Sheet disapproved and deleted successfully.")
     |> redirect(to: Routes.sheet_path(conn, :index))
   end
 end
