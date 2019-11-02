@@ -43,7 +43,7 @@ defmodule Timesheets.Sheets.Sheet do
           Ecto.Changeset.add_error(changeset, :total_hours, "Total hours exceeded 8. Please check and submit.")
         end
       else
-        Ecto.Changeset.add_error(changeset, :total_hours, "Minimum of 0 hours should be logged.")
+        Ecto.Changeset.add_error(changeset, :total_hours, "Minimum of 1 hours should be logged.")
       end
     end
   end

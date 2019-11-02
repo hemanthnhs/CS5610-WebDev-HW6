@@ -2,4 +2,4 @@
 
 <%= render "form.html", Map.put(assigns, :action, Routes.sheet_path(@conn, :create)) %>
 
-<span><%= link "Back", to: Routes.sheet_path(@conn, :index) %></span>
+<span><%= link "Back", class: "btn btn-outline-dark", to: Routes.sheet_path(@conn, :index) %></span>

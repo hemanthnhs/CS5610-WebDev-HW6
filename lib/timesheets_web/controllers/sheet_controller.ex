@@ -5,7 +5,6 @@ defmodule TimesheetsWeb.SheetController do
   alias Timesheets.Sheets
   alias Timesheets.Sheets.Sheet
   alias Timesheets.Logs
-  alias Timesheets.Authentications
 
   plug :authenticate_user when action in [:index, :new, :create, :show]
   plug :authenticate_manager when action in [:delete, :approve]
