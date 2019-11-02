@@ -15,5 +15,6 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 https://elixirforum.com/t/ecto-fields-validations/6081
 https://elixirforum.com/t/what-is-the-correct-way-to-use-ecto-query-that-allow-items-to-be-displayed-in-templates/7313
 https://elixirforum.com/t/nested-preload-from-the-doc-makes-me-confused/11991/5
+https://devhints.io
 * Other attributions mentioned in the code
 ## Design Decisions

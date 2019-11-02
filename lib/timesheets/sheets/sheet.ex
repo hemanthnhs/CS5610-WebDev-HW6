@@ -28,7 +28,7 @@ defmodule Timesheets.Sheets.Sheet do
     else
       # https://stackoverflow.com/questions/33492121/how-to-do-reduce-with-index-in-elixir
       {_, total_hours} = 1..8
-      |> Enum.reduce({1,0}, fn(num,{index,current_result}) ->
+      |> Enum.reduce({1,0}, fn(_num,{index,current_result}) ->
         if (attrs["job_id_#{index}"] != "" and attrs["hours_#{index}"] != "") do
           {hours, _} = Integer.parse(attrs["hours_#{index}"])
           {index+1,current_result + hours}

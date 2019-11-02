@@ -5,6 +5,10 @@ defmodule TimesheetsWeb.SheetController do
   alias Timesheets.Sheets
   alias Timesheets.Sheets.Sheet
   alias Timesheets.Logs
+  alias Timesheets.Authentications
+
+  plug :authenticate_user when action in [:index, :new, :create, :show]
+  plug :authenticate_manager when action in [:delete, :approve]
 
   def index(conn, _params) do
     if conn.assigns[:current_user].is_manager do
@@ -57,5 +61,36 @@ defmodule TimesheetsWeb.SheetController do
     conn
     |> put_flash(:info, "Time Sheet disapproved and deleted successfully.")
     |> redirect(to: Routes.sheet_path(conn, :index))
+  end
+
+  defp authenticate_user(conn, _params) do
+#   Attribution: Plugs from lens notes discussed on friday
+#   Reference https://whatdidilearn.info/2018/02/25/phoenix-authentication-and-authorization-using-plugs.html
+    if is_nil(conn.assigns.current_user) do
+      conn
+      |> put_flash(:error, "Please sign in and try again.")
+      |> redirect(to: Routes.session_path(conn, :new))
+      |> halt()
+      else
+        conn
+    end
+  end
+
+  defp authenticate_manager(conn, _params) do
+    if is_nil(conn.assigns.current_user) do
+      conn
+      |> put_flash(:error, "Please sign in and try again.")
+      |> redirect(to: Routes.session_path(conn, :new))
+      |> halt()
+    else
+      if conn.assigns.current_user.is_manager do
+        conn
+      else
+        conn
+        |> put_flash(:error, "Action not permitted for user.")
+        |> redirect(to: Routes.sheet_path(conn, :index))
+        |> halt()
+      end
+    end
   end
 end

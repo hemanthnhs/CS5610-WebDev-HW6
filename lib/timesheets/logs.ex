@@ -7,7 +7,6 @@ defmodule Timesheets.Logs do
   alias Timesheets.Repo
 
   alias Timesheets.Logs.Log
-  alias Timesheets.Jobs.Job
   @doc """
   Creates a log.
   ## Examples

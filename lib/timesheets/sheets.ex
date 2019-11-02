@@ -7,19 +7,18 @@ defmodule Timesheets.Sheets do
   alias Timesheets.Repo
 
   alias Timesheets.Sheets.Sheet
-  alias Timesheets.Jobs.Job
   alias Timesheets.Logs
   alias Timesheets.Users.User
 
   def list_subordinate_sheets(manager_id) do
     subordinates = Repo.all(from(u in User, select: u.id, where: u.supervisor_id == ^manager_id))
-    Repo.all(from(s in Sheet, where: s.user_id in ^subordinates,preload: [:user]))
+    Repo.all(from(s in Sheet, where: s.user_id in ^subordinates, order_by: {:desc, s.inserted_at},preload: [:user]))
   end
 
   def list_sheets_of_logged(worker_id) do
     #    Attribution and Reference from https://elixirforum.com/t/what-is-the-correct-way-to-use-ecto-query-that-allow-items-to-be-displayed-in-templates/7313
     #    Attribution and Reference from https://elixirforum.com/t/nested-preload-from-the-doc-makes-me-confused/11991/5
-    Repo.all(from(s in Sheet, where: s.user_id == ^worker_id))
+    Repo.all(from(s in Sheet, where: s.user_id == ^worker_id, order_by: {:desc, s.inserted_at}))
   end
 
   def get_sheet!(id) do

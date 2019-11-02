@@ -18,21 +18,21 @@
                   <ul class="navbar-nav mr-auto">
                     <%= if @current_user.is_manager do %>
                     <li class="nav-item">
-                      <a class="nav-link" href="/dashboard">Manage Sheets Data</a>
+                      <%= link("Manage Sheets Data", class: "nav-link", to: Routes.sheet_path(@conn, :index)) %>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/jobs">View Jobs</a>
+                      <%= link("View Jobs", class: "nav-link", to: Routes.job_path(@conn, :index)) %>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/jobs/new">Create Job</a>
+                      <%= link("Create Job", class: "nav-link", to: Routes.job_path(@conn, :new)) %>
                     </li>
                   <% else %>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/sheets/new">Fill New Sheet</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Submitted Sheets</a>
-                  </li>
+                      <li class="nav-item">
+                        <%= link("Fill New Sheet", class: "nav-link", to: Routes.sheet_path(@conn, :new)) %>
+                      </li>
+                      <li class="nav-item">
+                        <%= link("Submitted Sheets", class: "nav-link", to: Routes.sheet_path(@conn, :index)) %>
+                      </li>
                   <% end %>
                 </ul>
               <% end %>

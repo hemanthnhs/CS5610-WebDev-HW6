@@ -4,6 +4,8 @@ defmodule TimesheetsWeb.JobController do
   alias Timesheets.Jobs
   alias Timesheets.Jobs.Job
 
+  plug :authenticate_manager when action in [:new, :index, :create, :show, :edit, :update]
+
   def index(conn, _params) do
     jobs = Jobs.list_jobs(conn.assigns[:current_user].id)
     render(conn, "index.html", jobs: jobs)
@@ -51,4 +53,23 @@ defmodule TimesheetsWeb.JobController do
         render(conn, "edit.html", job: job, changeset: changeset)
     end
   end
+
+  defp authenticate_manager(conn, _params) do
+    if is_nil(conn.assigns.current_user) do
+      conn
+      |> put_flash(:error, "Please sign in and try again.")
+      |> redirect(to: Routes.session_path(conn, :new))
+      |> halt()
+    else
+      if conn.assigns.current_user.is_manager do
+        conn
+      else
+        conn
+        |> put_flash(:error, "Action not permitted for user.")
+        |> redirect(to: Routes.page_path(conn, :index))
+        |> halt()
+      end
+    end
+  end
+
 end

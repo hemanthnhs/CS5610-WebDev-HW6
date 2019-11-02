@@ -1,6 +1,5 @@
 defmodule Timesheets.Users.User do
   use Ecto.Schema
-  import Ecto.Changeset
 
   schema "users" do
     field :email, :string, null: false
@@ -12,7 +11,7 @@ defmodule Timesheets.Users.User do
     field :password_confirmation, :string, virtual: true
 
     has_many :jobs, Timesheets.Jobs.Job
-    has_many :logs, Timesheets.Logs.Log
+    has_many :sheets, Timesheets.Sheets.Sheet
     timestamps()
   end
 
