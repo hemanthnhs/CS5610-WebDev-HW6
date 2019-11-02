@@ -55,7 +55,6 @@ will be approved by reporting manager only
 scalable to full spec
 * Routes related job edit and other actions are shown as their functionality is implemented. Other non used routes are removed
 * Design decision was made to provide disapprove button which deletes the work log if manager decides to.
-* Github commit id in status file is the one before last commit.
 * Javascript is only used to warn user of partially entered i.e user selects job code but not hours or the reverse scenario.
 This is to make sure that the user is aware of partial data and inform the user only completed rows are saved.
 
